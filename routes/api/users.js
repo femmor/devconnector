@@ -7,6 +7,13 @@ const gravatar = require("gravatar")
 // Require Bcrypt
 const bcrypt = require("bcrypt")
 
+// implement JWT
+const jwt = require("jsonwebtoken")
+
+// Config
+const config = require("config")
+
+// Validate user input
 const { check, validationResult } = require("express-validator")
 
 // Get the user model
@@ -47,7 +54,7 @@ router.post("/", [
         //  Create an instance of the user with the avatar
         user = new User({name, email, avatar, password})
 
-        // Create a salt to hash with
+        // Create a salt to hash password with
         const salt = await bcrypt.genSalt(10)
 
         // Encrypt password
@@ -56,9 +63,24 @@ router.post("/", [
         // Save user to db
         await user.save()
 
+        // // Return JWT
+        // res.send("User registered")
 
-        // Return JWT
-        res.send("User registered")
+        // get the payload which includes the user id
+        const payload = {
+            user: {
+                id: user.id
+            }
+        }
+
+        // Sign the token - pass in the payload, jwtSecret
+        jwt.sign(payload, config.get("jwtSecret"), {expiresIn: 360000}, (err, token) => {
+            if (err) {
+                throw err
+            }
+            res.json({ token })
+        })
+
     } catch (error) {
         console.log(error.message)
         res.status(500).send("Server error")
