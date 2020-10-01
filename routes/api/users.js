@@ -39,6 +39,7 @@ router.post("/", [
 
     try {
          // See if user exists
+        //  FindOne user by email
          let user = await User.findOne({ email })
          if (user) {
             return res.status(200).json({ errors: [{ msg: "User already exist!" }] })
@@ -82,8 +83,8 @@ router.post("/", [
         })
 
     } catch (error) {
-        console.log(error.message)
-        res.status(500).send("Server error")
+        console.error(error.message)
+        res.status(500).send("Server error...")
     }
 })
 
