@@ -1,4 +1,6 @@
 {
     "mongoURI": "mongodb+srv://femmor2u:femmor2u@mernstack.wdubx.mongodb.net/devconnector?retryWrites=true&w=majority",
-    "jwtSecret": "mysecrettoken"
+    "jwtSecret": "mysecrettoken",
+    "githubClientId":"eee349c0e8dac0c357e8",
+    "githubClientSecret":"8a6644ce4b4ec382543b0bb4b651b382a050df01"
 }
