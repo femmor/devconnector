@@ -76,7 +76,6 @@ router.post("/", [auth, [
     if(githubUsername) profileFields.githubUsername = githubUsername
     // Turn skills to an array of strings
     if(skills) {
-        console.log(123)
         profileFields.skills = skills.split(',').map(skill => skill.trim())
     }
     // Build social object
@@ -112,6 +111,28 @@ router.post("/", [auth, [
         // return the profile
         return res.json(profile)
 
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send("Server error...")
+    }
+})
+
+
+// @route       DELETE api/profile
+// @desc        Delete profile user post
+// @access      Private 
+router.delete("/", auth, async (req, res) => {
+    try {
+        // TODO - remove user's post
+
+
+        // Remove profile 
+        await Profile.findOneAndRemove({ user: req.user.id })
+
+        // Remove user
+        await User.findOneAndRemove({ _id: req.user.id })
+
+        res.json({ msg: "User deleted" })
     } catch (error) {
         console.error(error.message)
         res.status(500).send("Server error...")
