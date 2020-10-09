@@ -14,7 +14,6 @@ const config = require("config")
 
 // Validate user 
 const { check, validationResult } = require("express-validator");
-const nodemon = require("nodemon");
 
 // @route       GET api/profile/me
 // @desc        Get current user's profile
