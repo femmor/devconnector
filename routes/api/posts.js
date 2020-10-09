@@ -54,7 +54,7 @@ router.post("/",[auth, [
 // @desc        Get all posts
 // @access      Private
 
-router.get("/", [auth], async (req, res) => {
+router.get("/", auth, async (req, res) => {
     try {
         const posts = await Post.find().sort({ date: -1 })
         res.json(posts)
@@ -63,5 +63,31 @@ router.get("/", [auth], async (req, res) => {
         res.status(500).send("Server error...")
     }
 })
+
+
+// @route       Get api/posts
+// @desc        Get user posts by ID
+// @access      Private
+
+router.get("/:id", auth, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id)
+
+        // Check if there is a post with that ID
+        if (!post) {
+            return res.status(404).json({ msg: "Post not found..." })
+        }
+
+        res.json(post)
+    } catch (error) {
+        console.error(error)
+        // If not a formatted ObjectID
+        if (error.kind === "ObjectId") {
+            return res.status(404).json({ msg: "Post not found..." })
+        }
+        res.status(500).send("Server error...")
+    }
+})
+
 
 module.exports = router;
