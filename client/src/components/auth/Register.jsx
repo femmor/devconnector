@@ -1,7 +1,16 @@
 import React, { useState } from 'react'
+
+// Connect component to Redux
+import {connect} from "react-redux"
+import {setAlert} from "../../actions/alert"
+
 import { Link } from "react-router-dom"
 
-const Register = () => {
+import PropTypes from "prop-types"
+
+
+
+const Register = ({ setAlert }) => {
 
     const [formData, setFormData] = useState({
         name: "",
@@ -19,7 +28,7 @@ const Register = () => {
         // Check if passwords are equal
         if (password !== password2) {
             // TODO - change this to an alert
-            console.log("Passwords do not match")
+            setAlert("Passwords do not match", "danger")
         } else {
             console.log("success")
         }
@@ -69,4 +78,9 @@ const Register = () => {
     )
 }
 
-export default Register
+Register.propTypes = {
+    setAlert: PropTypes.func.isRequired,
+}
+
+{/* Connect takes in 2 things - state and object with any actions(props.action) */}
+export default connect(null, {setAlert})(Register)

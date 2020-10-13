@@ -1,6 +1,6 @@
 import {SET_ALERT, REMOVE_ALERT} from "../actions/types"
 
-// Function that takes in a state
+// Function that takes in a state, initial empty array
 const initialState = []
 
 export default function(state = initialState, action) {
