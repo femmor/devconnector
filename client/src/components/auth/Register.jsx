@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
+import axios from "axios"
 
 const Register = () => {
 
@@ -14,13 +15,35 @@ const Register = () => {
 
     const onChange = e => setFormData({ ...formData, [e.target.name] : e.target.value })
 
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault()
         // Check if passwords are equal
         if (password !== password2) {
+            // TODO - change this to an alert
             console.log("Passwords do not match")
         } else {
-            console.log(formData)
+            const newUser = {
+                name,
+                email,
+                password
+            }
+
+            try {
+                // Create a config for the header
+                const config = {
+                    headers: {
+                        "Content-type": "application/json"
+                    }
+                }
+
+                // Stringify newUser
+                const body = JSON.stringify(newUser)
+                // Await the axios.post request
+                const res = axios.post("/api/users", body, config)
+                console.log(res.data)
+            } catch (error) {
+                console.error(error.response.data)
+            }
         }
     }
 
