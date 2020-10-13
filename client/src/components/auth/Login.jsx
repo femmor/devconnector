@@ -4,25 +4,16 @@ import { Link } from "react-router-dom"
 const Login = () => {
 
     const [formData, setFormData] = useState({
-        name: "",
         email: "",
-        password: "",
-        password2: ""
+        password: ""
     })
 
-    const {name, email, password, password2} = formData
+    const {email, password} = formData
 
     const onChange = e => setFormData({ ...formData, [e.target.name] : e.target.value })
 
     const onSubmit = async e => {
         e.preventDefault()
-        // Check if passwords are equal
-        if (password !== password2) {
-            // TODO - change this to an alert
-            console.log("Passwords do not match")
-        } else {
-            console.log("success")
-        }
     }
 
     return (
