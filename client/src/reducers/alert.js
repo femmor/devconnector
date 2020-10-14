@@ -4,9 +4,10 @@ import {SET_ALERT, REMOVE_ALERT} from "../actions/types"
 const initialState = []
 
 export default function(state = initialState, action) {
+    // Destructure the action
     const {type, payload} = action
 
-    // evaluate the action type
+    // evaluate the action type - with case statement
     switch (type) {
         case SET_ALERT:
             return [...state, payload]
