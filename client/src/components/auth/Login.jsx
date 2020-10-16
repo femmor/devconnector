@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
+import {connect} from "react-redux"
+import {setAlert} from "../../actions/alert"
+import {loginUser} from "../../actions/auth"
+import PropTypes from "prop-types"
 
-const Login = () => {
+const Login = ({ loginUser }) => {
 
     const [formData, setFormData] = useState({
         email: "",
@@ -14,6 +18,7 @@ const Login = () => {
 
     const onSubmit = async e => {
         e.preventDefault()
+        loginUser(email, password)
     }
 
     return (
@@ -31,7 +36,7 @@ const Login = () => {
                     name="password"
                     onChange={e => onChange(e)}
                     value={password}
-                    minLength="6"
+                    // minLength="6"
                 />
                 </div>
                 <input type="submit" className="btn btn-primary" value="Login" />
@@ -43,4 +48,8 @@ const Login = () => {
     )
 }
 
-export default Login
+Login.propTypes = {
+    loginUser: PropTypes.func.isRequired
+}
+
+export default connect(null, {loginUser})(Login)
