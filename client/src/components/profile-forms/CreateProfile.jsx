@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import {connect} from "react-redux"
 import PropTypes from 'prop-types'
+import {createProfile} from "../../actions/profile"
+import {Link, withRouter} from "react-router-dom" 
 
-const CreateProfile = props => {
+const CreateProfile = ({ createProfile, history }) => {
     const [formData, setFormData] = useState({
         company: "",
         website: "",
@@ -37,7 +39,14 @@ const CreateProfile = props => {
         instagram,
         } = formData
 
+    // onChange function
     const onChange = (e) => setFormData({ ...formData, [e.target.name] : e.target.value })
+
+    // onSubmit function
+    const onSubmit = e => {
+        e.preventDefault();
+        createProfile(formData, history)
+    } 
 
     return (
         <>
@@ -49,7 +58,7 @@ const CreateProfile = props => {
                 profile stand out
             </p>
             <small>* = required field</small>
-            <form className="form">
+            <form className="form" onSubmit={e => onSubmit(e)}>
                 <div className="form-group">
                 <select name="status" value={status} onChange={e => onChange(e)}>
                     <option value="0">* Select Professional Status</option>
@@ -144,7 +153,7 @@ const CreateProfile = props => {
                     </>
                 }
                 
-                <input type="submit" className="btn btn-primary my-1" />
+                <input type="submit" className="btn btn-primary my-1"/>
                 <a className="btn btn-light my-1" href="dashboard.html">Go Back</a>
             </form>
         </>
@@ -152,7 +161,7 @@ const CreateProfile = props => {
 }
 
 CreateProfile.propTypes = {
+    createProfile: PropTypes.func.isRequired,
+}   
 
-}
-
-export default connect()(CreateProfile)
+export default connect(null, {createProfile})(withRouter(CreateProfile))

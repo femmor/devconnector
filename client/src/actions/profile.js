@@ -17,3 +17,42 @@ export const getCurrentProfile = () => async dispatch => {
         })
     }
 }
+
+// Create or Update a profile
+export const createProfile = (formData, history, edit = false) => async dispatch => {
+    try {
+        // create a config object since we are sending data
+        const config = {
+            headers: {
+                "Content-type": "application/json"
+            }
+        } 
+
+        const res = await axios.post("/api/profile", formData, config)
+        dispatch({
+            type: GET_PROFILE,
+            payload: res.data
+        })
+
+        dispatch(setAlert(edit ? "Profile successfully updated!" : "Profile successfully created!"), "success")
+
+        if (!edit) {
+            history.push("/dashboard")
+        }
+        
+    } catch (err) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+        })
+
+        // Get array of errors from the api
+        const errors = err.response.data.errors
+        // Check if error and dispatch error message with danger alertType
+        if (errors) {
+            errors.forEach(error => {
+                dispatch(setAlert(error.msg, "danger"))
+            });
+        }
+    }
+}
