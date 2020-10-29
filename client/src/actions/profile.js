@@ -18,7 +18,7 @@ export const getCurrentProfile = () => async dispatch => {
     }
 }
 
-// Create or Update a profile
+// Create or Update a profile - action
 export const createProfile = (formData, history, edit = false) => async dispatch => {
     try {
         // create a config object since we are sending data
