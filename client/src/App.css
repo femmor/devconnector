@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+
 /* Global Styles */
 :root {
   --primary-color: #17a2b8;
@@ -14,11 +16,15 @@
 }
 
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Open Sans', sans-serif !important;
   font-size: 1rem;
   line-height: 1.6;
   background-color: #fff;
   color: #333;
+}
+
+#text {
+  font-family: 'Open Sans', sans-serif !important;
 }
 
 a {
