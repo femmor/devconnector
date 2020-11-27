@@ -164,5 +164,4 @@ CreateProfile.propTypes = {
     createProfile: PropTypes.func.isRequired,
 }
 
-{/* Use withRouter to enable us pass the history object */}
 export default connect(null, {createProfile})(withRouter(CreateProfile))
